@@ -10,7 +10,7 @@ bool Day(int current_hour) {
 
 
 int main() {
-	int current_hour = 7;
+	int current_hour = 15;
 	bool day = Day(current_hour);
 	Sun sun;
 	Air air(11);
