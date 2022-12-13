@@ -1,5 +1,5 @@
 #include "classes.h"
-#include <iostream>
+
 
 bool Day(int current_hour) {
 	if(current_hour >= 8 && current_hour <= 18) {
