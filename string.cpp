@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 
 class String {
 private:
@@ -12,6 +13,8 @@ public:
 	String();
 	String(const char*);
 	String(const String&);
+	String(String&&);
+	String& operator=(String&&);
 	~String();
 	const char* c_str() const;
 	char& at(size_t);
@@ -83,6 +86,23 @@ String::String(const String& src) {
 	for(int i = 0; i < m_size; ++i) {
 		m_buffer[i] = src.m_buffer[i];
 	}	
+}
+
+String::String(String&& src) {
+	m_size = std::exchange(src.m_size, 0);
+	m_capacity = std::exchange(src.m_capacity, 0);
+	m_buffer = std::exchange(src.m_buffer, nullptr);
+}
+
+String& String::operator=(String&& src) {
+	if(this == &src) {
+		return *this;
+	}
+	delete[] m_buffer;
+	m_size = std::exchange(src.m_size, 0);
+	m_capacity = std::exchange(src.m_capacity, 0);
+	m_buffer = std::exchange(src.m_buffer, nullptr);
+	return *this;
 }
 
 String::~String() {
@@ -497,3 +517,7 @@ std::ostream& operator<<(std::ostream& os, const String& src) {
 	} 
 	return os;
 };
+
+int main() {
+	//
+}
